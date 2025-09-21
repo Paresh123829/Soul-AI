@@ -11,7 +11,7 @@ from pydub import AudioSegment
 from pydub.playback import play
 
 # Set your Gemini API key
-genai.configure(api_key="AIzaSyCO19-BFJxgNokSstOO30Iox2CRdo_TBfg")
+genai.configure(api_key="Gemini API Key")
 
 # Initialize recognizer
 recognizer = sr.Recognizer()
@@ -102,3 +102,4 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+
