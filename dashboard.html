@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Detection & AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Soul AI</h1>
+        </header>
+
+        <div class="main-content">
+            <section class="video-section">
+                <h2>Mood Detector</h2>
+                <div class="video-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <div class="mood-display">
+                        <h3>Current Mood: <span id="current-mood">Initializing...</span></h3>
+                        <p id="mood-suggestion" style="font-style: italic;"></p>
+                    </div>
+                    <button id="start-detection" class="btn">
+                        <i class="fas fa-play"></i> Start Detection
+                    </button>
+                </div>
+            </section>
+
+            <section class="chat-section">
+                <h2>AI Assistant</h2>
+                <div class="chat-container">
+                    <div id="chat-messages">
+                        <div class="message bot">
+                            <div class="message-content">
+                                Hello! How are you feeling today?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="user-input" placeholder="Type your message here...">
+                        <button id="send-message" class="btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                        <button id="play-audio" class="btn" disabled>
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <button id="voice-input" class="btn" title="Speak your message">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="mood-log-section">
+            <h2>Mood History</h2>
+            <button id="show-history" class="btn">
+                <i class="fas fa-history"></i> View History
+            </button>
+            <div id="mood-history" class="mood-history-container hidden">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Mood</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-tbody">
+                        <!-- Mood history will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

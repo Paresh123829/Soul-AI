@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SOUL AI - Join Your Emotional Journey</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(120, 219, 226, 0.3) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 154, 158, 0.3) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(120, 119, 198, 0.3) 0%,
+            transparent 50%
+          );
+        z-index: -1;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        color: white;
+      }
+
+      .logo {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 30px;
+      }
+
+      .progress-container {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 8px;
+        margin-bottom: 30px;
+      }
+
+      .progress-bar {
+        height: 6px;
+        background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+        border-radius: 50px;
+        transition: width 0.3s ease;
+      }
+
+      .step-indicators {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .step-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .step-dot.active {
+        background: #4ecdc4;
+        transform: scale(1.2);
+      }
+
+      .step-dot.completed {
+        background: #ff6b6b;
+      }
+
+      .form-container {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 40px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .form-step {
+        display: none;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      .form-step.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .step-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .step-description {
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      label {
+        display: block;
+        color: white;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #4ecdc4;
+        box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .radio-group,
+      .checkbox-group {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      .radio-item,
+      .checkbox-item {
+        position: relative;
+      }
+
+      .radio-item input,
+      .checkbox-item input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .radio-label,
+      .checkbox-label {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: white;
+        font-size: 0.9rem;
+      }
+
+      .radio-label:hover,
+      .checkbox-label:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .radio-item input:checked + .radio-label,
+      .checkbox-item input:checked + .checkbox-label {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        border-color: transparent;
+        color: white;
+        font-weight: 600;
+      }
+
+      .slider-container {
+        margin: 20px 0;
+      }
+
+      .slider {
+        width: 100%;
+        height: 8px;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.2);
+        outline: none;
+        -webkit-appearance: none;
+      }
+
+      .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .slider-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.85rem;
+      }
+
+      .toggle-switch {
+        position: relative;
+        width: 60px;
+        height: 30px;
+        margin-left: 10px;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.3);
+        transition: 0.3s;
+        border-radius: 30px;
+      }
+
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 4px;
+        bottom: 4px;
+        background: white;
+        transition: 0.3s;
+        border-radius: 50%;
+      }
+
+      input:checked + .toggle-slider {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      }
+
+      input:checked + .toggle-slider:before {
+        transform: translateX(30px);
+      }
+
+      .password-container {
+        position: relative;
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: rgba(255, 255, 255, 0.6);
+        transition: color 0.3s ease;
+      }
+
+      .password-toggle:hover {
+        color: #4ecdc4;
+      }
+
+      .password-strength {
+        margin-top: 5px;
+        height: 4px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+      }
+
+      .strength-bar {
+        height: 100%;
+        width: 0%;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+      }
+
+      .strength-weak {
+        background: #ff6b6b;
+      }
+      .strength-medium {
+        background: #ffd93d;
+      }
+      .strength-strong {
+        background: #4ecdc4;
+      }
+
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+        gap: 20px;
+      }
+
+      .btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 120px;
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        color: white;
+        border: none;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .error-message {
+        color: #ff6b6b;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .success-message {
+        background: rgba(78, 205, 196, 0.2);
+        border: 1px solid #4ecdc4;
+        color: #4ecdc4;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .form-container {
+          padding: 25px;
+          margin: 10px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+
+        .radio-group,
+        .checkbox-group {
+          flex-direction: column;
+        }
+
+        .navigation {
+          flex-direction: column;
+        }
+
+        .logo {
+          font-size: 2rem;
+        }
+      }
+
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top: 3px solid #4ecdc4;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+      <div class="header">
+        <div class="logo">🧠 SOUL AI</div>
+        <div class="subtitle">Your Personal Emotional Wellness Companion</div>
+
+        <div class="progress-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="step-indicators" id="stepIndicators">
+          <div class="step-dot active"></div>
+          <div class="step-dot"></div>
+          <div class="step-dot"></div>
+          <div class="step-dot"></div>
+          <div class="step-dot"></div>
+          <div class="step-dot"></div>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <form id="registrationForm">
+          <!-- Step 1: Basic Information -->
+          <div class="form-step active" data-step="1">
+            <h2 class="step-title">🧾 Basic Information</h2>
+            <p class="step-description">
+              Let's start with the basics to personalize your experience
+            </p>
+
+            <div class="form-group">
+              <label for="fullName">Full Name *</label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Enter your full name"
+                required
+              />
+              <div class="error-message">Please enter your full name</div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="dateOfBirth">Date of Birth *</label>
+                <input
+                  type="date"
+                  id="dateOfBirth"
+                  name="dateOfBirth"
+                  required
+                />
+                <div class="error-message">Please enter your date of birth</div>
+              </div>
+              <div class="form-group">
+                <label for="age">Age</label>
+                <input
+                  type="number"
+                  id="age"
+                  name="age"
+                  readonly
+                  placeholder="Auto-calculated"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Sex *</label>
+              <div class="radio-group">
+                <div class="radio-item">
+                  <input
+                    type="radio"
+                    id="male"
+                    name="sex"
+                    value="male"
+                    required
+                  />
+                  <label for="male" class="radio-label">Male</label>
+                </div>
+                <div class="radio-item">
+                  <input
+                    type="radio"
+                    id="female"
+                    name="sex"
+                    value="female"
+                    required
+                  />
+                  <label for="female" class="radio-label">Female</label>
+                </div>
+                <div class="radio-item">
+                  <input
+                    type="radio"
+                    id="other"
+                    name="sex"
+                    value="other"
+                    required
+                  />
+                  <label for="other" class="radio-label">Other</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="your.email@example.com"
+                  required
+                />
+                <div class="error-message">
+                  Please enter a valid email address
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="contactNumber">Contact Number *</label>
+                <input
+                  type="tel"
+                  id="contactNumber"
+                  name="contactNumber"
+                  placeholder="1234567890"
+                  maxlength="10"
+                  required
+                />
+                <div class="error-message">
+                  Please enter a valid 10-digit phone number
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Mental & Physical Health -->
+          <div class="form-step" data-step="2">
+            <h2 class="step-title">🧠 Mental & Physical Health</h2>
+            <p class="step-description">
+              Help us understand your current health status to provide better
+              support
+            </p>
+
+            <div class="form-group">
+              <label style="display: flex; align-items: center">
+                Do you currently face any mental health issues?
+                <div class="toggle-switch">
+                  <input
+                    type="checkbox"
+                    id="mentalHealthIssues"
+                    name="mentalHealthIssues"
+                  />
+                  <span class="toggle-slider"></span>
+                </div>
+              </label>
+            </div>
+
+            <div
+              class="form-group"
+              id="mentalHealthDescription"
+              style="display: none"
+            >
+              <label for="mentalHealthDetails">Please describe briefly</label>
+              <textarea
+                id="mentalHealthDetails"
+                name="mentalHealthDetails"
+                rows="3"
+                placeholder="Share as much or as little as you're comfortable with..."
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="chronicIllness"
+                >Any chronic illnesses or health concerns?</label
+              >
+              <textarea
+                id="chronicIllness"
+                name="chronicIllness"
+                rows="3"
+                placeholder="Optional - helps us provide more personalized support"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="currentMentalState"
+                >How would you describe your current mental state? *</label
+              >
+              <select
+                id="currentMentalState"
+                name="currentMentalState"
+                required
+              >
+                <option value="">Select your current state</option>
+                <option value="happy">😊 Happy</option>
+                <option value="neutral">😐 Neutral</option>
+                <option value="anxious">😰 Anxious</option>
+                <option value="depressed">😔 Depressed</option>
+                <option value="angry">😠 Angry</option>
+                <option value="other">🤔 Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label style="display: flex; align-items: center">
+                Have you consulted a mental health professional before?
+                <div class="toggle-switch">
+                  <input
+                    type="checkbox"
+                    id="professionalConsultation"
+                    name="professionalConsultation"
+                  />
+                  <span class="toggle-slider"></span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Step 3: Lifestyle & Personality -->
+          <div class="form-step" data-step="3">
+            <h2 class="step-title">🧬 Lifestyle & Personality</h2>
+            <p class="step-description">
+              Tell us about your lifestyle and preferences to personalize your
+              experience
+            </p>
+
+            <div class="form-group">
+              <label>Hobbies (select all that apply)</label>
+              <div class="checkbox-group">
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="reading"
+                    name="hobbies"
+                    value="reading"
+                  />
+                  <label for="reading" class="checkbox-label">📚 Reading</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="music"
+                    name="hobbies"
+                    value="music"
+                  />
+                  <label for="music" class="checkbox-label">🎵 Music</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="sports"
+                    name="hobbies"
+                    value="sports"
+                  />
+                  <label for="sports" class="checkbox-label">⚽ Sports</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="gaming"
+                    name="hobbies"
+                    value="gaming"
+                  />
+                  <label for="gaming" class="checkbox-label">🎮 Gaming</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="painting"
+                    name="hobbies"
+                    value="painting"
+                  />
+                  <label for="painting" class="checkbox-label"
+                    >🎨 Painting</label
+                  >
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="coding"
+                    name="hobbies"
+                    value="coding"
+                  />
+                  <label for="coding" class="checkbox-label">💻 Coding</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="meditation"
+                    name="hobbies"
+                    value="meditation"
+                  />
+                  <label for="meditation" class="checkbox-label"
+                    >🧘 Meditation</label
+                  >
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="traveling"
+                    name="hobbies"
+                    value="traveling"
+                  />
+                  <label for="traveling" class="checkbox-label"
+                    >✈️ Traveling</label
+                  >
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="cooking"
+                    name="hobbies"
+                    value="cooking"
+                  />
+                  <label for="cooking" class="checkbox-label">🍳 Cooking</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="other-hobby"
+                    name="hobbies"
+                    value="other"
+                  />
+                  <label for="other-hobby" class="checkbox-label"
+                    >➕ Other</label
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cheerUpActivities"
+                >What are your favorite activities that cheer you up?</label
+              >
+              <textarea
+                id="cheerUpActivities"
+                name="cheerUpActivities"
+                rows="3"
+                placeholder="Describe activities that make you feel better..."
+              ></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="exerciseFrequency"
+                  >How often do you exercise?</label
+                >
+                <select id="exerciseFrequency" name="exerciseFrequency">
+                  <option value="">Select frequency</option>
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="rarely">Rarely</option>
+                  <option value="never">Never</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="stressPreference"
+                  >When stressed, do you prefer?</label
+                >
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="solitude"
+                      name="stressPreference"
+                      value="solitude"
+                    />
+                    <label for="solitude" class="radio-label">Solitude</label>
+                  </div>
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="interaction"
+                      name="stressPreference"
+                      value="interaction"
+                    />
+                    <label for="interaction" class="radio-label"
+                      >Interaction</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="socialLevel"
+                >How social are you? (1 = Introvert, 5 = Extrovert)</label
+              >
+              <div class="slider-container">
+                <input
+                  type="range"
+                  id="socialLevel"
+                  name="socialLevel"
+                  min="1"
+                  max="5"
+                  value="3"
+                  class="slider"
+                />
+                <div class="slider-labels">
+                  <span>Introvert</span>
+                  <span>Neutral</span>
+                  <span>Extrovert</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Do you drink alcohol?</label>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="alcohol-yes"
+                      name="alcoholConsumption"
+                      value="yes"
+                    />
+                    <label for="alcohol-yes" class="radio-label">Yes</label>
+                  </div>
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="alcohol-no"
+                      name="alcoholConsumption"
+                      value="no"
+                    />
+                    <label for="alcohol-no" class="radio-label">No</label>
+                  </div>
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="alcohol-occasionally"
+                      name="alcoholConsumption"
+                      value="occasionally"
+                    />
+                    <label for="alcohol-occasionally" class="radio-label"
+                      >Occasionally</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Do you smoke?</label>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="smoke-yes"
+                      name="smokingHabits"
+                      value="yes"
+                    />
+                    <label for="smoke-yes" class="radio-label">Yes</label>
+                  </div>
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="smoke-no"
+                      name="smokingHabits"
+                      value="no"
+                    />
+                    <label for="smoke-no" class="radio-label">No</label>
+                  </div>
+                  <div class="radio-item">
+                    <input
+                      type="radio"
+                      id="smoke-occasionally"
+                      name="smokingHabits"
+                      value="occasionally"
+                    />
+                    <label for="smoke-occasionally" class="radio-label"
+                      >Occasionally</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Communication Preferences -->
+          <div class="form-step" data-step="4">
+            <h2 class="step-title">💬 Communication Preferences</h2>
+            <p class="step-description">
+              Configure how your AI companion will interact with you
+            </p>
+
+            <div class="form-group">
+              <label
+                >Preferred support style from the chatbot (select all that
+                apply)</label
+              >
+              <div class="checkbox-group">
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="motivational"
+                    name="supportStyle"
+                    value="motivational"
+                  />
+                  <label for="motivational" class="checkbox-label"
+                    >💪 Motivational quotes</label
+                  >
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="jokes"
+                    name="supportStyle"
+                    value="jokes"
+                  />
+                  <label for="jokes" class="checkbox-label"
+                    >😂 Light-hearted jokes</label
+                  >
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="calm"
+                    name="supportStyle"
+                    value="calm"
+                  />
+                  <label for="calm" class="checkbox-label"
+                    >🕊️ Calm conversations</label
+                  >
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="yoga"
+                    name="supportStyle"
+                    value="yoga"
+                  />
+                  <label for="yoga" class="checkbox-label"
+                    >🧘 Office Yoga</label
+                  >
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="musicSuggestions"
+                    name="supportStyle"
+                    value="music"
+                  />
+                  <label for="musicSuggestions" class="checkbox-label"
+                    >🎵 Music suggestions</label
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="preferredTone">Preferred tone</label>
+                <select id="preferredTone" name="preferredTone">
+                  <option value="">Select tone</option>
+                  <option value="formal">👔 Formal</option>
+                  <option value="friendly">😊 Friendly</option>
+                  <option value="playful">🎭 Playful</option>
+                  <option value="neutral">😐 Neutral</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="conversationTime"
+                  >Preferred conversation time</label
+                >
+                <select id="conversationTime" name="conversationTime">
+                  <option value="">Select time</option>
+                  <option value="morning">🌅 Morning</option>
+                  <option value="afternoon">☀️ Afternoon</option>
+                  <option value="night">🌙 Night</option>
+                  <option value="no-preference">🕐 No preference</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5: Self-Reflection & Context -->
+          <div class="form-step" data-step="5">
+            <h2 class="step-title">💕 Self-Reflection & Emotional Context</h2>
+            <p class="step-description">
+              Help us understand your emotional patterns and preferences
+            </p>
+
+            <div class="form-group">
+              <label for="moodLifter"
+                >What's one thing that always lifts your mood?</label
+              >
+              <input
+                type="text"
+                id="moodLifter"
+                name="moodLifter"
+                placeholder="e.g., listening to music, talking to friends, taking a walk..."
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="stressSource"
+                >What's your biggest source of stress currently?</label
+              >
+              <textarea
+                id="stressSource"
+                name="stressSource"
+                rows="3"
+                placeholder="Share what's weighing on your mind..."
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="idealDay">Describe your ideal day</label>
+              <textarea
+                id="idealDay"
+                name="idealDay"
+                rows="4"
+                placeholder="Paint a picture of your perfect day - how would you feel, what would you do?"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label style="display: flex; align-items: center">
+                Would you like daily emotional check-ins?
+                <div class="toggle-switch">
+                  <input
+                    type="checkbox"
+                    id="dailyCheckins"
+                    name="dailyCheckins"
+                  />
+                  <span class="toggle-slider"></span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Step 6: Account Creation -->
+          <div class="form-step" data-step="6">
+            <h2 class="step-title">🔐 Create Your Account</h2>
+            <p class="step-description">
+              Almost done! Set up your login credentials
+            </p>
+
+            <div class="form-group">
+              <label for="username">Username *</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Choose a unique username"
+                required
+              />
+              <div class="error-message">
+                Username must be at least 3 characters long
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password *</label>
+              <div class="password-container">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Create a strong password"
+                  required
+                />
+                <span
+                  class="password-toggle"
+                  onclick="togglePassword('password')"
+                  >👁️</span
+                >
+              </div>
+              <div class="password-strength">
+                <div class="strength-bar" id="strengthBar"></div>
+              </div>
+              <div class="error-message">
+                Password must be at least 8 characters long
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password *</label>
+              <div class="password-container">
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Confirm your password"
+                  required
+                />
+                <span
+                  class="password-toggle"
+                  onclick="togglePassword('confirmPassword')"
+                  >👁️</span
+                >
+              </div>
+              <div class="error-message">Passwords do not match</div>
+            </div>
+
+            <div class="success-message" id="successMessage">
+              🎉 Registration successful! Welcome to MindMate AI - your
+              emotional wellness journey begins now!
+            </div>
+          </div>
+
+          <div class="navigation">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="prevBtn"
+              onclick="changeStep(-1)"
+              style="display: none"
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="nextBtn"
+              onclick="changeStep(1)"
+            >
+              Next
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="submitBtn"
+              style="display: none"
+            >
+              Complete Registration
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      let currentStep = 1;
+      const totalSteps = 6;
+
+      // Initialize form
+      document.addEventListener("DOMContentLoaded", function () {
+        updateProgressBar();
+        setupEventListeners();
+      });
+
+      function setupEventListeners() {
+        // Date of birth change to calculate age
+        document
+          .getElementById("dateOfBirth")
+          .addEventListener("change", calculateAge);
+
+        // Mental health issues toggle
+        document
+          .getElementById("mentalHealthIssues")
+          .addEventListener("change", function () {
+            const description = document.getElementById(
+              "mentalHealthDescription"
+            );
+            description.style.display = this.checked ? "block" : "none";
+          });
+
+        // Password strength checker
+        document
+          .getElementById("password")
+          .addEventListener("input", checkPasswordStrength);
+
+        // Confirm password validation
+        document
+          .getElementById("confirmPassword")
+          .addEventListener("input", validatePasswordMatch);
+
+        // Real-time validation for required fields
+        const requiredFields = document.querySelectorAll(
+          "input[required], select[required]"
+        );
+        requiredFields.forEach((field) => {
+          field.addEventListener("blur", validateField);
+          field.addEventListener("input", clearErrorMessage);
+        });
+
+        // Form submission
+        document
+          .getElementById("registrationForm")
+          .addEventListener("submit", handleSubmit);
+
+        // Step indicators click
+        const stepDots = document.querySelectorAll(".step-dot");
+        stepDots.forEach((dot, index) => {
+          dot.addEventListener("click", () => goToStep(index + 1));
+        });
+      }
+
+      function calculateAge() {
+        const birthDate = new Date(this.value);
+        const today = new Date();
+        const age = Math.floor(
+          (today - birthDate) / (365.25 * 24 * 60 * 60 * 1000)
+        );
+        document.getElementById("age").value = age > 0 ? age : "";
+      }
+
+      function changeStep(direction) {
+        if (direction === 1 && !validateCurrentStep()) {
+          return;
+        }
+
+        const newStep = currentStep + direction;
+        if (newStep >= 1 && newStep <= totalSteps) {
+          goToStep(newStep);
+        }
+      }
+
+      function goToStep(step) {
+        // Hide current step
+        document
+          .querySelector(`.form-step[data-step="${currentStep}"]`)
+          .classList.remove("active");
+
+        // Show new step
+        currentStep = step;
+        document
+          .querySelector(`.form-step[data-step="${currentStep}"]`)
+          .classList.add("active");
+
+        // Update navigation buttons
+        updateNavigationButtons();
+
+        // Update progress bar and indicators
+        updateProgressBar();
+        updateStepIndicators();
+
+        // Scroll to top
+        document
+          .querySelector(".form-container")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const submitBtn = document.getElementById("submitBtn");
+
+        prevBtn.style.display = currentStep === 1 ? "none" : "block";
+        nextBtn.style.display = currentStep === totalSteps ? "none" : "block";
+        submitBtn.style.display = currentStep === totalSteps ? "block" : "none";
+      }
+
+      function updateProgressBar() {
+        const progress = (currentStep / totalSteps) * 100;
+        document.getElementById("progressBar").style.width = progress + "%";
+      }
+
+      function updateStepIndicators() {
+        const dots = document.querySelectorAll(".step-dot");
+        dots.forEach((dot, index) => {
+          dot.classList.remove("active", "completed");
+          if (index + 1 === currentStep) {
+            dot.classList.add("active");
+          } else if (index + 1 < currentStep) {
+            dot.classList.add("completed");
+          }
+        });
+      }
+
+      function validateCurrentStep() {
+        const currentStepElement = document.querySelector(
+          `.form-step[data-step="${currentStep}"]`
+        );
+        const requiredFields = currentStepElement.querySelectorAll(
+          "input[required], select[required]"
+        );
+        let isValid = true;
+
+        requiredFields.forEach((field) => {
+          if (!validateField.call(field)) {
+            isValid = false;
+          }
+        });
+
+        return isValid;
+      }
+
+      function validateField() {
+        const field = this;
+        const errorElement = field.parentNode.querySelector(".error-message");
+        let isValid = true;
+        let errorMessage = "";
+
+        if (field.hasAttribute("required") && !field.value.trim()) {
+          isValid = false;
+          errorMessage = "This field is required";
+        } else if (
+          field.type === "email" &&
+          field.value &&
+          !isValidEmail(field.value)
+        ) {
+          isValid = false;
+          errorMessage = "Please enter a valid email address";
+        } else if (
+          field.type === "tel" &&
+          field.value &&
+          !isValidPhone(field.value)
+        ) {
+          isValid = false;
+          errorMessage = "Please enter a valid 10-digit phone number";
+        } else if (
+          field.id === "username" &&
+          field.value &&
+          field.value.length < 3
+        ) {
+          isValid = false;
+          errorMessage = "Username must be at least 3 characters long";
+        } else if (
+          field.id === "password" &&
+          field.value &&
+          field.value.length < 8
+        ) {
+          isValid = false;
+          errorMessage = "Password must be at least 8 characters long";
+        }
+
+        if (errorElement) {
+          if (isValid) {
+            errorElement.style.display = "none";
+            field.style.borderColor = "rgba(255, 255, 255, 0.2)";
+          } else {
+            errorElement.textContent = errorMessage;
+            errorElement.style.display = "block";
+            field.style.borderColor = "#ff6b6b";
+          }
+        }
+
+        return isValid;
+      }
+
+      function clearErrorMessage() {
+        const errorElement = this.parentNode.querySelector(".error-message");
+        if (errorElement) {
+          errorElement.style.display = "none";
+          this.style.borderColor = "rgba(255, 255, 255, 0.2)";
+        }
+      }
+
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      function isValidPhone(phone) {
+        const phoneRegex = /^\d{10}$/;
+        return phoneRegex.test(phone);
+      }
+
+      function togglePassword(fieldId) {
+        const field = document.getElementById(fieldId);
+        const toggle = field.nextElementSibling;
+
+        if (field.type === "password") {
+          field.type = "text";
+          toggle.textContent = "🙈";
+        } else {
+          field.type = "password";
+          toggle.textContent = "👁️";
+        }
+      }
+
+      function checkPasswordStrength() {
+        const password = this.value;
+        const strengthBar = document.getElementById("strengthBar");
+
+        let strength = 0;
+        if (password.length >= 8) strength++;
+        if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+        if (password.match(/\d/)) strength++;
+        if (password.match(/[^a-zA-Z\d]/)) strength++;
+
+        strengthBar.style.width = strength * 25 + "%";
+
+        if (strength <= 1) {
+          strengthBar.className = "strength-bar strength-weak";
+        } else if (strength <= 2) {
+          strengthBar.className = "strength-bar strength-medium";
+        } else {
+          strengthBar.className = "strength-bar strength-strong";
+        }
+      }
+
+      function validatePasswordMatch() {
+        const password = document.getElementById("password").value;
+        const confirmPassword = this.value;
+        const errorElement =
+          this.parentNode.parentNode.querySelector(".error-message");
+
+        if (confirmPassword && password !== confirmPassword) {
+          errorElement.style.display = "block";
+          this.style.borderColor = "#ff6b6b";
+          return false;
+        } else {
+          errorElement.style.display = "none";
+          this.style.borderColor = "rgba(255, 255, 255, 0.2)";
+          return true;
+        }
+      }
+
+      function collectFormData() {
+        const formData = {};
+
+        // Basic Information
+        formData.fullName = document.getElementById("fullName").value;
+        formData.dateOfBirth = document.getElementById("dateOfBirth").value;
+        formData.age = document.getElementById("age").value;
+        formData.sex = document.querySelector(
+          'input[name="sex"]:checked'
+        )?.value;
+        formData.email = document.getElementById("email").value;
+        formData.contactNumber = document.getElementById("contactNumber").value;
+
+        // Mental & Physical Health
+        formData.mentalHealthIssues =
+          document.getElementById("mentalHealthIssues").checked;
+        formData.mentalHealthDetails = document.getElementById(
+          "mentalHealthDetails"
+        ).value;
+        formData.chronicIllness =
+          document.getElementById("chronicIllness").value;
+        formData.currentMentalState =
+          document.getElementById("currentMentalState").value;
+        formData.professionalConsultation = document.getElementById(
+          "professionalConsultation"
+        ).checked;
+
+        // Lifestyle & Personality
+        formData.hobbies = Array.from(
+          document.querySelectorAll('input[name="hobbies"]:checked')
+        ).map((cb) => cb.value);
+        formData.cheerUpActivities =
+          document.getElementById("cheerUpActivities").value;
+        formData.exerciseFrequency =
+          document.getElementById("exerciseFrequency").value;
+        formData.socialLevel = document.getElementById("socialLevel").value;
+        formData.stressPreference = document.querySelector(
+          'input[name="stressPreference"]:checked'
+        )?.value;
+        formData.alcoholConsumption = document.querySelector(
+          'input[name="alcoholConsumption"]:checked'
+        )?.value;
+        formData.smokingHabits = document.querySelector(
+          'input[name="smokingHabits"]:checked'
+        )?.value;
+
+        // Communication Preferences
+        formData.supportStyle = Array.from(
+          document.querySelectorAll('input[name="supportStyle"]:checked')
+        ).map((cb) => cb.value);
+        formData.preferredTone = document.getElementById("preferredTone").value;
+        formData.conversationTime =
+          document.getElementById("conversationTime").value;
+
+        // Self-Reflection & Context
+        formData.moodLifter = document.getElementById("moodLifter").value;
+        formData.stressSource = document.getElementById("stressSource").value;
+        formData.idealDay = document.getElementById("idealDay").value;
+        formData.dailyCheckins =
+          document.getElementById("dailyCheckins").checked;
+
+        // Account Creation
+        formData.username = document.getElementById("username").value;
+        formData.password = document.getElementById("password").value;
+
+        return formData;
+      }
+
+      async function handleSubmit(e) {
+        e.preventDefault();
+
+        if (!validateCurrentStep()) {
+          return;
+        }
+
+        // Show loading overlay
+        document.getElementById("loadingOverlay").style.display = "flex";
+
+        try {
+          const formData = collectFormData();
+
+          // Simulate API call to Flask backend
+          const response = await fetch("/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+
+          if (response.ok) {
+            // Show success message
+            document.getElementById("successMessage").style.display = "block";
+            document.getElementById("submitBtn").style.display = "none";
+
+            // Redirect after 3 seconds
+            setTimeout(() => {
+              window.location.href = "/dashboard";
+            }, 3000);
+          } else {
+            throw new Error("Registration failed");
+          }
+        } catch (error) {
+          console.error("Registration error:", error);
+          alert("Registration failed. Please try again.");
+        } finally {
+          // Hide loading overlay
+          document.getElementById("loadingOverlay").style.display = "none";
+        }
+      }
+
+      // Save form data to memory (since localStorage is not available)
+      let formDataBackup = {};
+
+      function saveFormData() {
+        formDataBackup = collectFormData();
+      }
+
+      function restoreFormData() {
+        if (Object.keys(formDataBackup).length > 0) {
+          // Restore form data logic here if needed
+          console.log("Form data restored from memory");
+        }
+      }
+
+      // Auto-save form data every 30 seconds
+      setInterval(saveFormData, 30000);
+
+      // Smooth animations for better UX
+      const style = document.createElement("style");
+      style.textContent = `
+            .form-step {
+                transition: all 0.3s ease-in-out;
+            }
+            
+            .btn {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .btn::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                transition: width 0.3s, height 0.3s;
+            }
+            
+            .btn:active::before {
+                width: 300px;
+                height: 300px;
+            }
+        `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>
